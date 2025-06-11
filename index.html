@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lộ Trình Toán - STUDY ASSISTANT PRO</title>
+    
+    <!-- PWA Enhancements: Manifest and Theme Color -->
+    <meta name="theme-color" content="#0D6EFD"/>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="images/icons/icon-192x192.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: #F8F9FA;
+            color: #343A40;
+        }
+        .nav-button {
+            transition: all 0.3s ease;
+        }
+        .nav-button.active {
+            background-color: #0D6EFD;
+            color: white;
+            box-shadow: 0 4px 14px 0 rgba(13, 110, 253, 0.39);
+        }
+        .nav-button:not(.active):hover {
+            background-color: #E9ECEF;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.07);
+        }
+        .details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+        .details.open {
+            max-height: 2500px; /* Adjusted to accommodate LLM responses */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            height: auto;
+            max-height: 450px;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 2s linear infinite;
+            display: none; /* Hidden by default */
+            vertical-align: middle;
+            margin-left: 8px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .ai-output {
+            white-space: pre-wrap;
+            background: #f1f5f9;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 12px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+
+        <header class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800">Lộ Trình Tương Tác Lấy Lại Gốc Toán</h1>
+            <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">STUDY ASSISTANT PRO: Trợ lý học tập thấu hiểu và toàn diện.</p>
+        </header>
+
+        <nav id="main-nav" class="flex flex-wrap justify-center gap-2 md:gap-4 mb-10 bg-white p-3 rounded-xl shadow-sm sticky top-4 z-10">
+            <button data-target="overview" class="nav-button active font-semibold py-2 px-4 rounded-lg">🚀 Tổng quan</button>
+            <button data-target="phase1" class="nav-button font-semibold py-2 px-4 rounded-lg">1️⃣ GĐ 1: Nền tảng</button>
+            <button data-target="phase2" class="nav-button font-semibold py-2 px-4 rounded-lg">2️⃣ GĐ 2: Trọng tâm 12</button>
+            <button data-target="phase3" class="nav-button font-semibold py-2 px-4 rounded-lg">3️⃣ GĐ 3: Tăng tốc</button>
+            <button data-target="strategy" class="nav-button font-semibold py-2 px-4 rounded-lg">💡 Chiến lược & AI</button>
+        </nav>
+
+        <main id="main-content">
+            <!-- Section: Overview -->
+            <section id="overview" class="content-section active">
+                <div class="card p-6 md:p-8 mb-8">
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Tổng Quan & Phân Tích Đề Thi</h2>
+                    <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <div>
+                             <h3 class="text-xl font-semibold text-gray-700 mb-3">Cấu trúc đề thi THPT Quốc gia</h3>
+                             <p class="text-gray-600 mb-4">
+                                Đề thi môn Toán (tham khảo 2024) gồm 50 câu trắc nghiệm trong 90 phút. Trọng tâm là kiến thức lớp 12 (90%) và lớp 11 (10%). Nắm vững câu hỏi Nhận biết & Thông hiểu là chìa khóa để đạt điểm an toàn.
+                            </p>
+                            <div class="bg-blue-50 border-l-4 border-blue-500 text-blue-800 p-4 rounded-r-lg mb-4">
+                                <p><strong class="font-semibold">Lưu ý cho kỳ thi 2025:</strong> Đề thi dự kiến sẽ tinh gọn hơn, là lợi thế để tập trung vào kiến thức cốt lõi.</p>
+                            </div>
+                            <div class="flex justify-center my-4">
+                                <button id="toggle-chart-view" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors">Xem phân bổ theo Mức độ</button>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="exam-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card p-6 md:p-8">
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">✨ Lập Kế Hoạch Học Tập Cá Nhân Hóa</h2>
+                    <p class="text-gray-600 mb-6">Nhập các chủ đề bạn yếu nhất và thời gian học mỗi ngày. AI sẽ tạo ra một lịch trình 4 tuần tùy chỉnh dành riêng cho bạn.</p>
+                    <div class="w-full text-left space-y-4">
+                        <div>
+                            <label for="weak-topics-input" class="block text-sm font-medium text-gray-700">Các chủ đề bạn cảm thấy yếu nhất?</label>
+                            <input type="text" id="weak-topics-input" class="mt-1 w-full p-2 border border-gray-300 rounded-md" placeholder="VD: Logarit, Hình học không gian, Tích phân">
+                        </div>
+                        <div>
+                            <label for="daily-time-input" class="block text-sm font-medium text-gray-700">Bạn có thể học bao nhiêu lâu mỗi ngày?</label>
+                            <input type="text" id="daily-time-input" class="mt-1 w-full p-2 border border-gray-300 rounded-md" placeholder="VD: 60 phút, 1.5 tiếng">
+                        </div>
+                        <button id="personal-planner-btn" class="mt-2 w-full bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded-lg text-sm transition-colors flex items-center justify-center">
+                            Tạo Kế Hoạch 4 Tuần Cho Tôi ✨<span class="loader"></span>
+                        </button>
+                        <div id="personal-planner-output" class="mt-2"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="phase1" class="content-section">
+                <div class="card p-6 md:p-8"><h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Giai đoạn 1: Xây Dựng Nền Tảng Vững Chắc</h2><p class="text-gray-600 mb-6">Mục tiêu là vá lại những lỗ hổng kiến thức từ cấp dưới và nắm vững các chủ đề cốt lõi của lớp 11.</p><div id="phase1-topics" class="space-y-4"></div><div id="phase1-completion" class="mt-6"></div></div>
+            </section>
+            <section id="phase2" class="content-section">
+                <div class="card p-6 md:p-8"><h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Giai đoạn 2: Tập Trung Kiến Thức Lớp 12</h2><p class="text-gray-600 mb-6">Đây là giai đoạn trọng tâm, chiếm 90% đề thi. Hãy ưu tiên các câu hỏi ở mức Nhận biết và Thông hiểu.</p><div id="phase2-topics" class="space-y-4"></div><div id="phase2-completion" class="mt-6"></div></div>
+            </section>
+            <section id="phase3" class="content-section">
+                <div class="card p-6 md:p-8"><h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Giai đoạn 3: Luyện Đề & Tăng Tốc</h2><p class="text-gray-600 mb-6">Chuyển từ học kiến thức sang rèn luyện kỹ năng làm bài thi, áp dụng kiến thức dưới áp lực thời gian.</p><div id="phase3-topics" class="space-y-4"></div><div id="phase3-completion" class="mt-6"></div></div>
+            </section>
+
+            <section id="strategy" class="content-section">
+                 <div class="card p-6 md:p-8"><h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Chiến Lược Học Tập & Trợ Lý AI</h2><p class="text-gray-600 mb-6">Kết hợp phương pháp học truyền thống với các công cụ AI thông minh để tối ưu hóa quá trình ôn luyện.</p><div id="strategy-items" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div></div>
+            </section>
+        </main>
+    </div>
+
+    <!-- 
+    =====================================================================
+    HƯỚNG DẪN DEPLOY PWA (PROGRESSIVE WEB APP)
+    =====================================================================
+    Để biến ứng dụng này thành một PWA có thể cài đặt, bạn cần tạo
+    2 file sau đây và đặt chúng cùng thư mục với file HTML này.
+    
+    File 1: manifest.json
+    File 2: service-worker.js
+
+    Nội dung của 2 file này đã được cung cấp trong Hướng dẫn ở Canvas trước.
+    LƯU Ý QUAN TRỌNG:
+    1. Bạn cần tạo một thư mục 'images/icons' và đặt các file icon vào đó.
+    2. PWA yêu cầu phải được phục vụ qua HTTPS (trừ khi test trên localhost).
+    =====================================================================
+    -->
+
+    <script>
+        // PWA Service Worker Registration
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./service-worker.js').then(registration => {
+              console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            }, err => {
+              console.log('ServiceWorker registration failed: ', err);
+            });
+          });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- DATA ---
+            const allTopics = [
+                'Hàm số và Đạo hàm', 'Mũ và Logarit', 'Nguyên hàm và Tích phân', 'Số phức', 
+                'Hình học không gian', 'Hình học Oxyz', 'Tổ hợp và Xác suất', 'Cấp số cộng, Cấp số nhân'
+            ];
+            const data = {
+                examTopics: { labels: ['Ứng dụng đạo hàm', 'Hàm số mũ, logarit', 'Số phức', 'Nguyên hàm, tích phân', 'Khối đa diện', 'Khối tròn xoay', 'Hình học Oxyz', 'Đại số tổ hợp', 'Quan hệ vuông góc'], data: [10, 8, 6, 6, 3, 3, 8, 4, 2]},
+                examDifficulty: { labels: ['Nhận biết', 'Thông hiểu', 'Vận dụng', 'Vận dụng cao'], data: [20, 16, 8, 6]},
+                phase1Topics: [
+                    { title: '📚 Rà soát kiến thức nền tảng (Lớp 6-10)', details: ['<strong>Số học & Đại số cơ bản:</strong> Các phép toán, hằng đẳng thức, phương trình bậc nhất.', '<strong>Hình học cơ bản:</strong> Diện tích, chu vi, tính chất hình học.', '<strong>Kiến thức lớp 10:</strong> Tam thức bậc hai, lượng giác, vectơ.'] },
+                    { title: '🧠 Củng cố kiến thức lớp 11 (10% đề thi)', details: ['<strong>Tổ hợp và Xác suất:</strong> Quy tắc đếm, hoán vị, chỉnh hợp, tổ hợp.', '<strong>Cấp số cộng, Cấp số nhân:</strong> Công thức cơ bản.', '<strong>Hình học không gian:</strong> Quan hệ song song và vuông góc.'] }
+                ],
+                phase2Topics: [
+                    { title: '📈 Ứng dụng đạo hàm để khảo sát hàm số', details: ['Tính đơn điệu, cực trị, GTLN-GTNN, tiệm cận, đồ thị.'] },
+                    { title: '📐 Hàm số mũ và Logarit', details: ['Lý thuyết lũy thừa, phương trình và bất phương trình mũ-logarit.'] },
+                    { title: '∫ Nguyên hàm – Tích phân và ứng dụng', details: ['Công thức, phương pháp, ứng dụng tính diện tích, thể tích.'] },
+                    { title: 'ℂ Số phức', details: ['Phép toán, module, biểu diễn hình học.'] },
+                    { title: '🌐 Hình học giải tích trong không gian Oxyz', details: ['Tọa độ, phương trình mặt phẳng, đường thẳng, mặt cầu.'] },
+                    { title: '🧊 Khối đa diện và Khối tròn xoay', details: ['Thể tích khối chóp, lăng trụ. Diện tích, thể tích khối nón, trụ, cầu.'] }
+                ],
+                phase3Topics: [
+                     { title: '⏱️ Luyện đề tổng hợp', details: ['Làm đề thi thử, đề các năm trước dưới áp lực thời gian thật.'] },
+                     { title: '⚡ Hoàn thiện kỹ năng làm bài', details: ['Chiến lược phân bổ thời gian, kỹ thuật làm trắc nghiệm.'] }
+                ],
+                strategyItems: [
+                    { icon: '❤️‍🩹', title: 'Lên Dây Cót Tinh Thần', description: 'Cảm thấy nản lòng? AI sẽ ở đây để động viên và giúp bạn lấy lại tinh thần chiến đấu!', specialFeature: 'motivationalTalk' },
+                    { icon: '🔗', title: 'Kết Nối Các Chủ Đề', description: 'Khám phá mối liên hệ ẩn sau các chủ đề Toán học để có cái nhìn sâu sắc hơn.', specialFeature: 'connectTopics' },
+                    { icon: '📉', title: 'Phân Tích Mẫu Lỗi Sai', description: 'Mô tả những lỗi sai bạn thường gặp, AI sẽ phân tích mẫu lỗi và đưa ra lời khuyên chiến lược để khắc phục.', specialFeature: 'analyzeMistakePattern' },
+                    { icon: '📖', title: 'Sổ Tay Công Thức Thông Minh', description: 'Tra cứu nhanh công thức, định nghĩa và ví dụ cho mọi chủ đề quan trọng.', specialFeature: 'formulaHandbook' },
+                    { icon: '🤖', title: 'Gia sư AI 24/7', description: 'Đặt bất kỳ câu hỏi Toán nào và nhận câu trả lời ngay lập tức!', specialFeature: 'aiTutor' }
+                ],
+                formulaTopics: allTopics
+            };
+
+            // --- NAVIGATION ---
+            const navButtons = document.querySelectorAll('#main-nav button');
+            function switchTab(targetId) {
+                document.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
+                document.getElementById(targetId).classList.add('active');
+                navButtons.forEach(button => button.classList.toggle('active', button.dataset.target === targetId));
+            }
+            navButtons.forEach(button => button.addEventListener('click', () => switchTab(button.dataset.target)));
+
+            // --- GEMINI API CALLER ---
+            async function callGemini(prompt, outputElement, loaderElement) {
+                outputElement.innerHTML = '';
+                loaderElement.style.display = 'inline-block';
+                const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                try {
+                    const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                    const result = await response.json();
+                    if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
+                        outputElement.innerHTML = `<div class="ai-output">${result.candidates[0].content.parts[0].text}</div>`;
+                    } else {
+                        outputElement.innerHTML = `<p class="text-sm text-red-500 mt-3">Không thể xử lý yêu cầu. Vui lòng thử lại.</p>`;
+                        console.error('API response format unexpected:', result);
+                    }
+                } catch (error) {
+                    console.error('Lỗi khi gọi API Gemini:', error);
+                    outputElement.innerHTML = `<p class="text-sm text-red-500 mt-3">Đã xảy ra lỗi kết nối AI. Vui lòng kiểm tra console.</p>`;
+                } finally {
+                    loaderElement.style.display = 'none';
+                }
+            }
+
+            // --- UI ELEMENT CREATION ---
+            function createTopicItem(topic) {
+                const item = document.createElement('div');
+                item.className = 'card p-5';
+                item.innerHTML = `
+                    <div class="font-semibold text-lg text-gray-800 cursor-pointer">${topic.title}</div>
+                    <div class="details text-gray-600 mt-2 space-y-1 pl-4 border-l-2 border-gray-200">
+                        ${topic.details.map(d => `<p>${d}</p>`).join('')}
+                        <div class="flex flex-wrap gap-2 mt-4 text-xs">
+                            <button class="explain-btn bg-purple-500 hover:bg-purple-600 text-white font-bold py-1 px-2 rounded-md flex items-center">Giải thích ✨<span class="loader"></span></button>
+                            <button class="mindmap-btn bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded-md flex items-center">Sơ đồ tư duy ✨<span class="loader"></span></button>
+                            <button class="analogy-btn bg-sky-500 hover:bg-sky-600 text-white font-bold py-1 px-2 rounded-md flex items-center">Ví dụ đời thường ✨<span class="loader"></span></button>
+                            <button class="mistake-prediction-btn bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-1 px-2 rounded-md flex items-center">Dự đoán lỗi sai ✨<span class="loader"></span></button>
+                            <button class="quiz-btn bg-rose-500 hover:bg-rose-600 text-white font-bold py-1 px-2 rounded-md flex items-center">Kiểm tra nhỏ ✨<span class="loader"></span></button>
+                        </div>
+                        <div class="ai-interaction-output mt-2"></div>
+                    </div>
+                `;
+                item.querySelector('.font-semibold').addEventListener('click', () => item.querySelector('.details').classList.toggle('open'));
+                const outputElement = item.querySelector('.ai-interaction-output');
+                const conceptTitle = topic.title.replace(/<[^>]*>/g, '');
+                
+                item.querySelector('.explain-btn').addEventListener('click', e => {
+                    const prompt = `Với vai trò là một gia sư Toán, hãy giải thích khái niệm '${conceptTitle}' một cách đơn giản, dễ hiểu nhất cho học sinh mất gốc.`;
+                    callGemini(prompt, outputElement, e.currentTarget.querySelector('.loader'));
+                });
+                item.querySelector('.mindmap-btn').addEventListener('click', e => {
+                    const prompt = `Với vai trò là một chuyên gia về phương pháp học tập trực quan, hãy tạo một Sơ đồ tư duy (mind map) bằng văn bản cho chủ đề toán học '${conceptTitle}'. Sử dụng các mức thụt đầu dòng để thể hiện các nhánh chính, nhánh phụ. Bao gồm các khái niệm cốt lõi, công thức quan trọng, và các lưu ý đặc biệt.`;
+                    callGemini(prompt, outputElement, e.currentTarget.querySelector('.loader'));
+                });
+                item.querySelector('.analogy-btn').addEventListener('click', e => {
+                    const prompt = `Với vai trò là một người giải thích các khái niệm phức tạp, hãy giải thích chủ đề toán học '${conceptTitle}' bằng một ví dụ hoặc một phép ẩn dụ đơn giản, gần gũi với đời sống hàng ngày của một học sinh cấp 3. Mục tiêu là giúp họ hiểu được bản chất của vấn đề một cách trực quan nhất.`;
+                    callGemini(prompt, outputElement, e.currentTarget.querySelector('.loader'));
+                });
+                item.querySelector('.mistake-prediction-btn').addEventListener('click', e => {
+                    const prompt = `Với vai trò là một gia sư Toán kinh nghiệm, hãy liệt kê 3-4 lỗi sai phổ biến nhất mà học sinh thường mắc phải khi học chủ đề '${conceptTitle}'. Với mỗi lỗi sai, hãy giải thích ngắn gọn tại sao nó lại xảy ra và đưa ra một mẹo nhỏ để phòng tránh.`;
+                    callGemini(prompt, outputElement, e.currentTarget.querySelector('.loader'));
+                });
+                item.querySelector('.quiz-btn').addEventListener('click', e => {
+                    const prompt = `Với vai trò là một gia sư Toán, hãy tạo một bài kiểm tra nhỏ gồm 5 câu hỏi trắc nghiệm về chủ đề '${conceptTitle}'. Các câu hỏi nên có độ khó tăng dần từ nhận biết đến thông hiểu. Cuối cùng, cung cấp đáp án và giải thích ngắn gọn cho từng câu.`;
+                    callGemini(prompt, outputElement, e.currentTarget.querySelector('.loader'));
+                });
+                return item;
+            }
+
+            function createStrategyItem(item) {
+                const card = document.createElement('div');
+                card.className = 'card p-6 flex flex-col items-center text-center';
+                let content = '';
+                switch (item.specialFeature) {
+                    case 'motivationalTalk':
+                        card.className += ' md:col-span-2 lg:col-span-3';
+                        content = `<div class="text-4xl mb-3">${item.icon}</div><h4 class="font-bold text-lg text-gray-800 mb-2">${item.title}</h4><p class="text-gray-600 text-sm mb-4">${item.description}</p>
+                            <div class="w-full text-left space-y-3">
+                                <label for="mood-selector" class="block text-sm font-medium text-gray-700">Tâm trạng của bạn lúc này?</label>
+                                <select id="mood-selector" class="w-full p-2 border border-gray-300 rounded-md mt-1">
+                                    <option value="Nản lòng">Nản lòng</option>
+                                    <option value="Căng thẳng">Căng thẳng</option>
+                                    <option value="Mất phương hướng">Mất phương hướng</option>
+                                    <option value="Mệt mỏi">Mệt mỏi</option>
+                                </select>
+                                <button class="pep-talk-btn w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded-lg flex items-center justify-center">Tiếp thêm động lực cho tôi ✨<span class="loader"></span></button>
+                                <div class="pep-talk-output mt-2"></div>
+                            </div>`;
+                        break;
+                    case 'connectTopics':
+                        card.className += ' md:col-span-2 lg:col-span-3';
+                        content = `<div class="text-4xl mb-3">${item.icon}</div><h4 class="font-bold text-lg text-gray-800 mb-2">${item.title}</h4><p class="text-gray-600 text-sm mb-4">${item.description}</p>
+                            <div class="w-full text-left space-y-3">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div><label for="topic1" class="block text-sm font-medium text-gray-700">Chủ đề 1:</label><select id="topic1" class="w-full p-2 border border-gray-300 rounded-md mt-1">${allTopics.map(t => `<option value="${t}">${t}</option>`).join('')}</select></div>
+                                    <div><label for="topic2" class="block text-sm font-medium text-gray-700">Chủ đề 2:</label><select id="topic2" class="w-full p-2 border border-gray-300 rounded-md mt-1">${allTopics.map(t => `<option value="${t}">${t}</option>`).join('')}</select></div>
+                                </div>
+                                <button class="connect-topics-btn w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded-lg flex items-center justify-center">Khám Phá Mối Liên Hệ ✨<span class="loader"></span></button>
+                                <div class="connect-topics-output mt-2"></div>
+                            </div>`;
+                        break;
+                    case 'analyzeMistakePattern':
+                        card.className += ' md:col-span-2 lg:col-span-3';
+                        content = `<div class="text-4xl mb-3">${item.icon}</div><h4 class="font-bold text-lg text-gray-800 mb-2">${item.title}</h4><p class="text-gray-600 text-sm mb-4">${item.description}</p>
+                            <div class="w-full text-left space-y-3">
+                                <textarea id="mistake-pattern-input" rows="4" class="w-full p-2 border border-gray-300 rounded-md" placeholder="VD: Em hay quên đổi dấu khi chuyển vế, thường tính sai các bài logarit có cơ số khác nhau..."></textarea>
+                                <button class="mistake-pattern-btn w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg flex items-center justify-center">Phân Tích Giúp Tôi ✨<span class="loader"></span></button>
+                                <div class="mistake-pattern-output mt-2"></div>
+                            </div>`;
+                        break;
+                    case 'formulaHandbook':
+                        card.className += ' md:col-span-2 lg:col-span-3';
+                        content = `<div class="text-4xl mb-3">${item.icon}</div><h4 class="font-bold text-lg text-gray-800 mb-2">${item.title}</h4><p class="text-gray-600 text-sm mb-4">${item.description}</p>
+                            <div class="w-full text-left space-y-3">
+                                <select id="formula-topic" class="w-full p-2 border border-gray-300 rounded-md">${data.formulaTopics.map(topic => `<option value="${topic}">${topic}</option>`).join('')}</select>
+                                <button class="formula-btn w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg flex items-center justify-center">Tra Cứu Ngay ✨<span class="loader"></span></button>
+                                <div class="formula-output mt-2"></div>
+                            </div>`;
+                        break;
+                    case 'aiTutor':
+                        card.className += ' md:col-span-2 lg:col-span-3';
+                        content = `<div class="text-4xl mb-3">${item.icon}</div><h4 class="font-bold text-lg text-gray-800 mb-2">${item.title}</h4><p class="text-gray-600 text-sm mb-4">${item.description}</p>
+                            <div class="w-full text-left">
+                                <textarea id="ai-tutor-input" rows="3" class="w-full p-2 border border-gray-300 rounded-md" placeholder="Ví dụ: 'Giải thích giúp em định lý Vi-ét'"></textarea>
+                                <button id="ai-tutor-btn" class="mt-2 w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg flex items-center justify-center">Hỏi Gia sư AI ✨<span class="loader"></span></button>
+                                <div id="ai-tutor-output" class="mt-2"></div>
+                            </div>`;
+                        break;
+                    default:
+                         content = `<div class="text-4xl mb-3">${item.icon}</div><h4 class="font-bold text-lg text-gray-800 mb-2">${item.title}</h4><p class="text-gray-600 text-sm">${item.description}</p>`;
+                         break;
+                }
+                card.innerHTML = content;
+
+                card.querySelector('.pep-talk-btn')?.addEventListener('click', e => {
+                    const mood = card.querySelector('#mood-selector').value;
+                    const outputEl = card.querySelector('.pep-talk-output');
+                    const prompt = `Với vai trò là một người bạn đồng hành thấu hiểu và một chuyên gia tâm lý học đường, hãy viết một lời động viên chân thành cho một học sinh đang cảm thấy '${mood}' khi học môn Toán. Hãy dùng ngôn ngữ khích lệ, tích cực, công nhận cảm xúc của họ và đưa ra một góc nhìn mới hoặc một lời khuyên nhỏ, cụ thể để giúp họ vượt qua.`;
+                    callGemini(prompt, outputEl, e.currentTarget.querySelector('.loader'));
+                });
+
+                card.querySelector('.connect-topics-btn')?.addEventListener('click', e => {
+                    const topic1 = card.querySelector('#topic1').value;
+                    const topic2 = card.querySelector('#topic2').value;
+                    const outputEl = card.querySelector('.connect-topics-output');
+                    if (topic1 === topic2) { outputEl.innerHTML = `<p class="text-sm text-yellow-600 mt-3">Vui lòng chọn hai chủ đề khác nhau.</p>`; return; }
+                    const prompt = `Với vai trò là một nhà toán học, hãy giải thích mối liên hệ sâu sắc giữa hai chủ đề toán học: '${topic1}' và '${topic2}'. Hãy giải thích cách chúng tương tác, bổ trợ cho nhau, hoặc là các trường hợp đặc biệt của một khái niệm lớn hơn. Sử dụng ngôn ngữ dễ hiểu cho học sinh cấp 3.`;
+                    callGemini(prompt, outputEl, e.currentTarget.querySelector('.loader'));
+                });
+
+                card.querySelector('.mistake-pattern-btn')?.addEventListener('click', e => {
+                    const input = card.querySelector('#mistake-pattern-input').value;
+                    const outputEl = card.querySelector('.mistake-pattern-output');
+                    if (!input.trim()) { outputEl.innerHTML = `<p class="text-sm text-yellow-600 mt-3">Vui lòng mô tả lỗi sai của bạn.</p>`; return; }
+                    const prompt = `Với vai trò là một gia sư Toán kinh nghiệm, hãy phân tích các mẫu lỗi sai từ mô tả của học sinh: "${input}". Hãy: 1. Xác định (các) mẫu lỗi sai cốt lõi. 2. Giải thích tại sao những lỗi này thường xảy ra. 3. Đưa ra lời khuyên chiến lược và các dạng bài tập cụ thể để giúp học sinh khắc phục.`;
+                    callGemini(prompt, outputEl, e.currentTarget.querySelector('.loader'));
+                });
+                card.querySelector('.formula-btn')?.addEventListener('click', e => {
+                    const topic = card.querySelector('#formula-topic').value;
+                    const outputEl = card.querySelector('.formula-output');
+                    const prompt = `Với vai trò gia sư Toán, hãy liệt kê và giải thích các công thức quan trọng nhất trong chủ đề '${topic}'. Với mỗi công thức: 1. Ghi rõ công thức. 2. Giải thích ý nghĩa và khi nào dùng. 3. Cho một ví dụ áp dụng đơn giản.`;
+                    callGemini(prompt, outputEl, e.currentTarget.querySelector('.loader'));
+                });
+                card.querySelector('#ai-tutor-btn')?.addEventListener('click', e => {
+                     const input = card.querySelector('#ai-tutor-input').value;
+                     const outputEl = card.querySelector('#ai-tutor-output');
+                     if (!input.trim()) { outputEl.innerHTML = `<p class="text-sm text-yellow-600 mt-3">Vui lòng nhập câu hỏi.</p>`; return; }
+                     const prompt = `Với vai trò gia sư Toán thân thiện, hãy trả lời câu hỏi của học sinh: "${input}"`;
+                     callGemini(prompt, outputEl, e.currentTarget.querySelector('.loader'));
+                });
+                return card;
+            }
+
+            function createCompletionSection(phaseNum, phaseName) {
+                const container = document.getElementById(`phase${phaseNum}-completion`);
+                container.innerHTML = `
+                    <div class="text-center p-4 bg-green-50 rounded-lg">
+                        <button class="complete-phase-btn bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg flex items-center justify-center mx-auto">
+                            Tôi đã hoàn thành ${phaseName}! ✨<span class="loader"></span>
+                        </button>
+                        <div class="completion-output mt-2"></div>
+                    </div>
+                `;
+                container.querySelector('.complete-phase-btn').addEventListener('click', e => {
+                    const outputEl = container.querySelector('.completion-output');
+                    const prompt = `Với vai trò là một người bạn đồng hành và cố vấn học tập AI, hãy viết một lời động viên, khích lệ cho một học sinh vừa hoàn thành "${phaseName}" trong lộ trình lấy lại gốc Toán. Hãy công nhận sự nỗ lực của họ, nhắc lại ngắn gọn những gì họ đã học trong giai đoạn này, và tạo động lực cho giai đoạn tiếp theo.`;
+                    callGemini(prompt, outputEl, e.currentTarget.querySelector('.loader'));
+                });
+            }
+
+            // --- RENDER INITIAL UI ---
+            const renderContainer = (containerId, data) => {
+                const container = document.getElementById(containerId);
+                data.forEach(item => container.appendChild(createTopicItem(item)));
+            };
+            renderContainer('phase1-topics', data.phase1Topics);
+            renderContainer('phase2-topics', data.phase2Topics);
+            renderContainer('phase3-topics', data.phase3Topics);
+            
+            createCompletionSection(1, 'Giai đoạn 1: Nền tảng');
+            createCompletionSection(2, 'Giai đoạn 2: Trọng tâm 12');
+            createCompletionSection(3, 'Giai đoạn 3: Tăng tốc');
+
+            const strategyContainer = document.getElementById('strategy-items');
+            data.strategyItems.sort((a, b) => a.specialFeature ? -1 : 1)
+                               .forEach(item => strategyContainer.appendChild(createStrategyItem(item)));
+
+            document.getElementById('personal-planner-btn').addEventListener('click', e => {
+                const topics = document.getElementById('weak-topics-input').value;
+                const time = document.getElementById('daily-time-input').value;
+                const outputEl = document.getElementById('personal-planner-output');
+                if (!topics.trim() || !time.trim()) {
+                    outputEl.innerHTML = `<p class="text-sm text-yellow-600 mt-3">Vui lòng nhập đầy đủ thông tin.</p>`;
+                    return;
+                }
+                const prompt = `Với vai trò là một cố vấn học tập AI, hãy tạo một lịch trình học tập cá nhân hóa trong 4 tuần cho học sinh củng cố kiến thức Toán. Các chủ đề yếu: "${topics}". Thời gian học mỗi ngày: "${time}". Hãy chia kế hoạch theo từng tuần, từng ngày, bao gồm các hoạt động cụ thể như ôn lý thuyết, làm bài tập, và xem lại lỗi sai.`;
+                callGemini(prompt, outputEl, e.currentTarget.querySelector('.loader'));
+            });
+
+            // --- CHART.JS SETUP ---
+            const ctx = document.getElementById('exam-chart').getContext('2d');
+            const chartConfig = { type: 'doughnut', data: { labels: data.examTopics.labels, datasets: [{ label: 'Số câu', data: data.examTopics.data, backgroundColor: ['rgba(255, 99, 132, 0.7)','rgba(54, 162, 235, 0.7)','rgba(255, 206, 86, 0.7)','rgba(75, 192, 192, 0.7)','rgba(153, 102, 255, 0.7)','rgba(255, 159, 64, 0.7)','rgba(46, 204, 113, 0.7)','rgba(231, 76, 60, 0.7)','rgba(149, 165, 166, 0.7)'], borderColor: '#fff', borderWidth: 2 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' }, title: { display: true, text: 'Phân bổ câu hỏi theo Chuyên đề', font: { size: 16 } }, tooltip: { callbacks: { label: c => `${c.label||''}: ${c.parsed||0} câu` } } } } };
+            const examChart = new Chart(ctx, chartConfig);
+            document.getElementById('toggle-chart-view').addEventListener('click', e => {
+                const isTopicsView = examChart.options.plugins.title.text.includes('Chuyên đề');
+                const newView = isTopicsView ? 'difficulty' : 'topics';
+                const chartDataKey = `exam${newView.charAt(0).toUpperCase() + newView.slice(1)}`;
+                examChart.data.labels = data[chartDataKey].labels;
+                examChart.data.datasets[0].data = data[chartDataKey].data;
+                examChart.options.plugins.title.text = `Phân bổ câu hỏi theo ${isTopicsView ? 'Mức độ' : 'Chuyên đề'}`;
+                e.target.textContent = `Xem phân bổ theo ${isTopicsView ? 'Chuyên đề' : 'Mức độ'}`;
+                examChart.update();
+            });
+        });
+    </script>
+
+</body>
+</html>
+```
+
+Bây giờ bạn có thể tiếp tục với các bước trong bản hướng dẫn để triển khai ứng dụng của mình. Chúc bạn thành cô
