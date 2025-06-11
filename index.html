@@ -109,7 +109,7 @@
             <button data-target="phase1" class="nav-button font-semibold py-2 px-4 rounded-lg">1️⃣ GĐ 1: Nền tảng</button>
             <button data-target="phase2" class="nav-button font-semibold py-2 px-4 rounded-lg">2️⃣ GĐ 2: Trọng tâm 12</button>
             <button data-target="phase3" class="nav-button font-semibold py-2 px-4 rounded-lg">3️⃣ GĐ 3: Tăng tốc</button>
-            <button data-target="strategy" class="nav-button font-semibold py-2 px-4 rounded-lg">💡 Chiến lược & AI</button>
+            <button data-target="strategy" class="nav-button font-semibold py-2 px-4 rounded-lg">💡 Chiến lược & Hỏi Đáp với AI</button>
         </nav>
 
         <main id="main-content">
@@ -194,21 +194,23 @@
                 examTopics: { labels: ['Ứng dụng đạo hàm', 'Hàm số mũ, logarit', 'Số phức', 'Nguyên hàm, tích phân', 'Khối đa diện', 'Khối tròn xoay', 'Hình học Oxyz', 'Đại số tổ hợp', 'Quan hệ vuông góc'], data: [10, 8, 6, 6, 3, 3, 8, 4, 2]},
                 examDifficulty: { labels: ['Nhận biết', 'Thông hiểu', 'Vận dụng', 'Vận dụng cao'], data: [20, 16, 8, 6]},
                 phase1Topics: [
-                    { title: '📚 Rà soát kiến thức nền tảng (Lớp 6-10)', details: ['<strong>Số học & Đại số cơ bản:</strong> Các phép toán về phân số, lũy thừa, căn bậc hai, hằng đẳng thức.', '<strong>Phương trình & Hệ phương trình:</strong> Giải phương trình bậc nhất, bậc hai (Delta, Vi-ét).', '<strong>Hình học phẳng:</strong> Hệ thức lượng trong tam giác vuông, tính chất đường tròn.'] },
-                    { title: '🩺 Bài Kiểm Tra Chẩn Đoán Năng Lực AI', details: ['Để xác định chính xác những "lỗ hổng" kiến thức của bạn, hãy bắt đầu với bài kiểm tra chẩn đoán do AI tạo ra. AI sẽ đưa ra một số câu hỏi tổng hợp, sau đó phân tích kết quả để đề xuất lộ trình học tập phù hợp nhất cho bạn.'], specialFeature: 'diagnosticTest' },
-                    { title: '🧠 Củng cố kiến thức lớp 11 (10% đề thi)', details: ['<strong>Tổ hợp và Xác suất:</strong> Quy tắc đếm, hoán vị, chỉnh hợp, tổ hợp.', '<strong>Cấp số cộng, Cấp số nhân:</strong> Công thức cơ bản.', '<strong>Hình học không gian:</strong> Quan hệ song song và vuông góc.'] }
+                    { title: '🔢 Số học & Biểu thức (THCS)', details: ['Các phép tính về phân số, lũy thừa, căn bậc hai. Biến đổi và rút gọn biểu thức đại số, hằng đẳng thức đáng nhớ.'], topicType: 'thcs' },
+                    { title: '🟰 Phương trình & Hệ phương trình (THCS)', details: ['Giải phương trình bậc nhất, bậc hai (Delta, Vi-ét). Giải hệ hai phương trình bậc nhất hai ẩn.'], topicType: 'thcs' },
+                    { title: '📐 Hình học phẳng (THCS)', details: ['Hệ thức lượng trong tam giác vuông, tính chất các đường trong tam giác, tính chất tứ giác nội tiếp và đường tròn.'], topicType: 'thcs' },
+                    { title: '🩺 Bài Kiểm Tra Chẩn Đoán Năng Lực', details: ['Để xác định chính xác những "lỗ hổng" kiến thức của bạn, hãy bắt đầu với bài kiểm tra chẩn đoán do AI tạo ra. AI sẽ đưa ra một số câu hỏi tổng hợp, sau đó phân tích kết quả để đề xuất lộ trình học tập phù hợp nhất cho bạn.'], specialFeature: 'diagnosticTest' },
+                    { title: '🧠 Củng cố kiến thức lớp 11 (10% đề thi)', details: ['<strong>Tổ hợp và Xác suất:</strong> Quy tắc đếm, hoán vị, chỉnh hợp, tổ hợp.', '<strong>Cấp số cộng, Cấp số nhân:</strong> Công thức cơ bản.', '<strong>Hình học không gian:</strong> Quan hệ song song và vuông góc.'], topicType: 'standard' }
                 ],
                 phase2Topics: [
-                    { title: '📈 Ứng dụng đạo hàm để khảo sát hàm số', details: ['Tính đơn điệu, cực trị, GTLN-GTNN, tiệm cận, đồ thị.'] },
-                    { title: '📐 Hàm số mũ và Logarit', details: ['Lý thuyết lũy thừa, phương trình và bất phương trình mũ-logarit.'] },
-                    { title: '∫ Nguyên hàm – Tích phân và ứng dụng', details: ['Công thức, phương pháp, ứng dụng tính diện tích, thể tích.'] },
-                    { title: 'ℂ Số phức', details: ['Phép toán, module, biểu diễn hình học.'] },
-                    { title: '🌐 Hình học giải tích trong không gian Oxyz', details: ['Tọa độ, phương trình mặt phẳng, đường thẳng, mặt cầu.'] },
-                    { title: '🧊 Khối đa diện và Khối tròn xoay', details: ['Thể tích khối chóp, lăng trụ. Diện tích, thể tích khối nón, trụ, cầu.'] }
+                    { title: '📈 Ứng dụng đạo hàm để khảo sát hàm số', details: ['Tính đơn điệu, cực trị, GTLN-GTNN, tiệm cận, đồ thị.'], topicType: 'standard' },
+                    { title: '📐 Hàm số mũ và Logarit', details: ['Lý thuyết lũy thừa, phương trình và bất phương trình mũ-logarit.'], topicType: 'standard' },
+                    { title: '∫ Nguyên hàm – Tích phân và ứng dụng', details: ['Công thức, phương pháp, ứng dụng tính diện tích, thể tích.'], topicType: 'standard' },
+                    { title: 'ℂ Số phức', details: ['Phép toán, module, biểu diễn hình học.'], topicType: 'standard' },
+                    { title: '🌐 Hình học giải tích trong không gian Oxyz', details: ['Tọa độ, phương trình mặt phẳng, đường thẳng, mặt cầu.'], topicType: 'standard' },
+                    { title: '🧊 Khối đa diện và Khối tròn xoay', details: ['Thể tích khối chóp, lăng trụ. Diện tích, thể tích khối nón, trụ, cầu.'], topicType: 'standard' }
                 ],
                 phase3Topics: [
-                     { title: '✍️ Tạo Đề Thi Thử Theo Cấu Trúc', details: ['AI sẽ tạo ra một đề thi thử (khoảng 20-25 câu) mô phỏng cấu trúc đề thi thật, giúp bạn rèn luyện kỹ năng và làm quen với áp lực thời gian.'], specialFeature: 'generateMockExam' },
-                     { title: '⚡ Hoàn thiện kỹ năng làm bài', details: ['Chiến lược phân bổ thời gian, kỹ thuật làm trắc nghiệm, và các mẹo để tối ưu hóa điểm số.'] }
+                     { title: '⏱️ Luyện đề tổng hợp', details: ['Làm đề thi thử, đề các năm trước dưới áp lực thời gian thật.'], topicType: 'standard' },
+                     { title: '⚡ Hoàn thiện kỹ năng làm bài', details: ['Chiến lược phân bổ thời gian, kỹ thuật làm trắc nghiệm.'], topicType: 'standard' }
                 ],
                 strategyItems: [
                     { icon: '❤️‍🩹', title: 'Lên Dây Cót Tinh Thần', description: 'Cảm thấy nản lòng? AI sẽ ở đây để động viên và giúp bạn lấy lại tinh thần chiến đấu!', specialFeature: 'motivationalTalk' },
@@ -231,7 +233,7 @@
 
             // --- GEMINI API CALLER (Robust version) ---
             async function callGemini(prompt, conversationContainer, context) {
-                const apiKey = "YOUR_GOOGLE_AI_STUDIO_API_KEY";
+                const apiKey = "AIzaSyAVUW36IOWj45U1Y69w5NH69VJ_9J8CGvQ";
 
                 if (apiKey === "YOUR_GOOGLE_AI_STUDIO_API_KEY" || !apiKey) {
                     const errorDiv = document.createElement('div');
@@ -273,8 +275,8 @@
                         aiResponseDiv.textContent = result.candidates[0].content.parts[0].text;
                         conversationContainer.appendChild(aiResponseDiv);
                         
-                        if (context && (context.specialFeature === 'diagnosticTest_results' || context.specialFeature === 'generateMockExam')) {
-                             // Do not add follow up for these features
+                        if (context && context.specialFeature === 'diagnosticTest_results') {
+                             // Do not add follow up for test results to keep it clean
                         } else if(context && context.conceptTitle) {
                            addFollowUpUI(conversationContainer, context);
                         }
@@ -342,6 +344,7 @@
                 const item = document.createElement('div');
                 item.className = 'card p-5';
 
+                // Handle special features like the diagnostic test
                 if (topic.specialFeature === 'diagnosticTest') {
                     item.innerHTML = `
                         <div class="font-semibold text-lg text-gray-800 cursor-pointer">${topic.title}</div>
@@ -365,25 +368,50 @@
                             addDiagnosticAnalysisUI(conversationContainer);
                         });
                     });
-                } else if (topic.specialFeature === 'generateMockExam') {
-                    item.innerHTML = `
+
+                } else if (topic.topicType === 'thcs') { // Handle THCS topics
+                     item.innerHTML = `
                         <div class="font-semibold text-lg text-gray-800 cursor-pointer">${topic.title}</div>
                         <div class="details text-gray-600 mt-2 space-y-1 pl-4 border-l-2 border-gray-200">
                             <p>${topic.details[0]}</p>
-                            <div class="mock-exam-container mt-4">
-                                <button class="generate-exam-btn bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg flex items-center justify-center">Tạo Đề Thi Thử Ngay ✨</button>
-                                <div class="conversation-container mt-2"></div>
+                            <div class="initial-buttons flex flex-wrap gap-2 mt-4 text-xs">
+                                <button data-prompt-type="summary" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-1 px-2 rounded-md flex items-center">Tóm tắt cốt lõi ✨</button>
+                                <button data-prompt-type="cheatsheet" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded-md flex items-center">Công thức cần nhớ ✨</button>
+                                <button data-prompt-type="application" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-1 px-2 rounded-md flex items-center">Ứng dụng Thực tế ✨</button>
                             </div>
-                        </div>`;
-                    
+                            <div class="conversation-container mt-2" style="max-height: 500px; overflow-y: auto;"></div>
+                        </div>
+                    `;
                     item.querySelector('.font-semibold').addEventListener('click', () => item.querySelector('.details').classList.toggle('open'));
+                
+                    const conversationContainer = item.querySelector('.conversation-container');
+                    const conceptTitle = topic.title.replace(/\s*\(THCS\)/i, ''); // Clean title for prompt
+                    const initialButtons = item.querySelector('.initial-buttons');
 
-                    item.querySelector('.generate-exam-btn').addEventListener('click', e => {
-                         e.currentTarget.style.display = 'none';
-                         const conversationContainer = item.querySelector('.conversation-container');
-                         const prompt = `Với vai trò là một người ra đề thi chuyên nghiệp, hãy tạo một đề thi thử môn Toán (khoảng 20-25 câu) mô phỏng cấu trúc đề thi THPT Quốc gia. Đề thi cần bao gồm các chuyên đề: Hàm số, Mũ & Logarit, Nguyên hàm & Tích phân, Số phức, Hình học Oxyz, Hình học không gian, và một vài câu lớp 11. Phân bổ độ khó hợp lý (60% Nhận biết/Thông hiểu, 40% Vận dụng). Cuối cùng, hãy cung cấp một bảng đáp án và giải thích ngắn gọn cho từng câu.`;
-                         callGemini(prompt, conversationContainer, { specialFeature: 'generateMockExam' });
+                    initialButtons.querySelectorAll('button').forEach(button => {
+                        button.addEventListener('click', (e) => {
+                            conversationContainer.innerHTML = '';
+                            initialButtons.style.display = 'none';
+
+                            const promptType = e.currentTarget.dataset.promptType;
+                            let initialPrompt = '';
+                            switch(promptType) {
+                                case 'summary': initialPrompt = `Hãy tóm tắt những kiến thức cốt lõi nhất về chủ đề '${conceptTitle}' của chương trình THCS mà học sinh bắt buộc phải nắm vững để thi THPT Quốc gia.`; break;
+                                case 'cheatsheet': initialPrompt = `Liệt kê các công thức quan trọng nhất về '${conceptTitle}' ở bậc THCS dưới dạng một bảng "cheatsheet" ngắn gọn, dễ nhớ.`; break;
+                                case 'application': initialPrompt = `Với vai trò là một người truyền cảm hứng học Toán, hãy giải thích cách chủ đề '${conceptTitle}' được áp dụng trong đời sống thực tế (ví dụ: tài chính cá nhân, vật lý), công nghệ (ví dụ: lập trình, đồ họa máy tính), hoặc các lĩnh vực khoa học khác. Hãy đưa ra các ví dụ cụ thể, thú vị để học sinh thấy được ý nghĩa và tầm quan trọng của môn Toán.`; break;
+                            }
+                            if(initialPrompt) {
+                                callGemini(initialPrompt, conversationContainer, { conceptTitle });
+                            }
+                        });
                     });
+
+                    item.querySelector('.font-semibold').addEventListener('click', () => {
+                        if (!item.querySelector('.details').classList.contains('open')) {
+                            initialButtons.style.display = 'flex';
+                        }
+                    });
+
                 } else { // Standard topic items
                     item.innerHTML = `
                         <div class="font-semibold text-lg text-gray-800 cursor-pointer">${topic.title}</div>
@@ -403,7 +431,7 @@
                     item.querySelector('.font-semibold').addEventListener('click', () => item.querySelector('.details').classList.toggle('open'));
                 
                     const conversationContainer = item.querySelector('.conversation-container');
-                    const conceptTitle = topic.title.replace(/<[^>]*>/g, '').replace(/\s*\(.*\)/, '');
+                    const conceptTitle = topic.title.replace(/<[^>]*>/g, '');
                     const initialButtons = item.querySelector('.initial-buttons');
 
                     initialButtons.querySelectorAll('button').forEach(button => {
@@ -416,7 +444,7 @@
                             switch(promptType) {
                                 case 'explain': initialPrompt = `Với vai trò là một gia sư Toán, hãy giải thích khái niệm '${conceptTitle}' một cách đơn giản, dễ hiểu nhất cho học sinh mất gốc.`; break;
                                 case 'mindmap': initialPrompt = `Với vai trò là một chuyên gia về phương pháp học tập trực quan, hãy tạo một Sơ đồ tư duy (mind map) bằng văn bản cho chủ đề toán học '${conceptTitle}'.`; break;
-                                case 'application': initialPrompt = `Với vai trò là một người truyền cảm hứng học Toán, hãy giải thích cách chủ đề '${conceptTitle}' được áp dụng trong đời sống thực tế (ví dụ: tài chính, vật lý), công nghệ (ví dụ: lập trình), hoặc khoa học. Hãy đưa ra các ví dụ cụ thể, thú vị.`; break;
+                                case 'application': initialPrompt = `Với vai trò là một người truyền cảm hứng học Toán, hãy giải thích cách chủ đề '${conceptTitle}' được áp dụng trong đời sống thực tế (ví dụ: tài chính cá nhân, vật lý), công nghệ (ví dụ: lập trình, đồ họa máy tính), hoặc các lĩnh vực khoa học khác. Hãy đưa ra các ví dụ cụ thể, thú vị để học sinh thấy được ý nghĩa và tầm quan trọng của môn Toán.`; break;
                                 case 'mistake': initialPrompt = `Với vai trò là một gia sư Toán kinh nghiệm, hãy liệt kê 3-4 lỗi sai phổ biến nhất mà học sinh thường mắc phải khi học chủ đề '${conceptTitle}' và cách phòng tránh.`; break;
                                 case 'quiz': initialPrompt = `Với vai trò là một gia sư Toán, hãy tạo một bài kiểm tra nhỏ gồm 5 câu hỏi trắc nghiệm về chủ đề '${conceptTitle}' với đáp án và giải thích.`; break;
                             }
@@ -650,4 +678,4 @@
 
 </body>
 </html>
-                                  TRI THỨC LÀ SỨC MẠNH: 🎉Great achievements often start with small steps - very big thing is made of small steps, small steps can lead to remarkable accomplishment and significant progress as well🌟
+ TRI THỨC LÀ SỨC MẠNH: 🎉Great achievements often start with small steps - very big thing is made of small steps, small steps can lead to remarkable accomplishment and significant progress as well🌟
