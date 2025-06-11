@@ -170,23 +170,6 @@
         </main>
     </div>
 
-    <!-- 
-    =====================================================================
-    HƯỚNG DẪN DEPLOY PWA (PROGRESSIVE WEB APP)
-    =====================================================================
-    Để biến ứng dụng này thành một PWA có thể cài đặt, bạn cần tạo
-    2 file sau đây và đặt chúng cùng thư mục với file HTML này.
-    
-    File 1: manifest.json
-    File 2: service-worker.js
-
-    Nội dung của 2 file này đã được cung cấp trong Hướng dẫn ở Canvas trước.
-    LƯU Ý QUAN TRỌNG:
-    1. Bạn cần tạo một thư mục 'images/icons' và đặt các file icon vào đó.
-    2. PWA yêu cầu phải được phục vụ qua HTTPS (trừ khi test trên localhost).
-    =====================================================================
-    -->
-
     <script>
         // PWA Service Worker Registration
         if ('serviceWorker' in navigator) {
@@ -248,7 +231,7 @@
                 outputElement.innerHTML = '';
                 loaderElement.style.display = 'inline-block';
                 const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
-                const apiKey = "";
+                const apiKey = "AIzaSyAVUW36IOWj45U1Y69w5NH69VJ_9J8CGvQ";
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                 try {
                     const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
